@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "https://rboard.dertyp7214.de/static/css/main.9620c19c.css",
-    "main.js": "https://rboard.dertyp7214.de/static/js/main.d1061ee2.js",
+    "main.js": "https://rboard.dertyp7214.de/static/js/main.e5746765.js",
     "index.html": "https://rboard.dertyp7214.de/index.html",
     "main.9620c19c.css.map": "https://rboard.dertyp7214.de/static/css/main.9620c19c.css.map",
-    "main.d1061ee2.js.map": "https://rboard.dertyp7214.de/static/js/main.d1061ee2.js.map"
+    "main.e5746765.js.map": "https://rboard.dertyp7214.de/static/js/main.e5746765.js.map"
   },
   "entrypoints": [
     "static/css/main.9620c19c.css",
-    "static/js/main.d1061ee2.js"
+    "static/js/main.e5746765.js"
   ]
 }
