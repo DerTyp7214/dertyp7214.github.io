@@ -20,8 +20,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 17
+          cache: yarn
 
       - name: Install dependencies and build page
+        env:
+          PUBLIC_URL: https://rboard.dertyp7214.de
         run: |
           yarn install --frozen-lockfile
           yarn build
