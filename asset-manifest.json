@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.69a8fe46.css",
-    "main.js": "/static/js/main.d1518059.js",
-    "static/js/787.9b443e25.chunk.js": "/static/js/787.9b443e25.chunk.js",
-    "index.html": "/index.html",
-    "main.69a8fe46.css.map": "/static/css/main.69a8fe46.css.map",
-    "main.d1518059.js.map": "/static/js/main.d1518059.js.map",
-    "787.9b443e25.chunk.js.map": "/static/js/787.9b443e25.chunk.js.map"
+    "main.css": "https://rboard.dertyp7214.de/static/css/main.69a8fe46.css",
+    "main.js": "https://rboard.dertyp7214.de/static/js/main.36edcdb2.js",
+    "static/js/787.9b443e25.chunk.js": "https://rboard.dertyp7214.de/static/js/787.9b443e25.chunk.js",
+    "index.html": "https://rboard.dertyp7214.de/index.html",
+    "main.69a8fe46.css.map": "https://rboard.dertyp7214.de/static/css/main.69a8fe46.css.map",
+    "main.36edcdb2.js.map": "https://rboard.dertyp7214.de/static/js/main.36edcdb2.js.map",
+    "787.9b443e25.chunk.js.map": "https://rboard.dertyp7214.de/static/js/787.9b443e25.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.69a8fe46.css",
-    "static/js/main.d1518059.js"
+    "static/js/main.36edcdb2.js"
   ]
 }
