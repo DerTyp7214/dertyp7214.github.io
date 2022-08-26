@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 function App() {
   return <>
     <Routes>
+      <Route path='*' element={<>404</>} />
       <Route path='/' element={<>Hi</>} />
       <Route path='about' element={<>Rboard Homepage</>} />
     </Routes>
