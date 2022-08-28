@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies and build page
         env:
-          PUBLIC_URL: https://rboard.dertyp7214.de
+          PUBLIC_URL: https://rboard.dev
         run: |
           yarn install --frozen-lockfile
           yarn build
