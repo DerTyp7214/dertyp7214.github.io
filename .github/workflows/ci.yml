@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
-  
+
 permissions:
   contents: write
   pages: write
@@ -15,9 +15,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  buildAndDeploy:
+  build:
     concurrency: ci-${{ github.ref }}
-    name: Build and Deploy Page
+    name: Build Page
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
