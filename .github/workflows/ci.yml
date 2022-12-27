@@ -19,9 +19,17 @@ jobs:
           mkdir out
           curl -L https://github.com/DerTyp7214/Portfoio/releases/latest/download/out.tar.gz | tar -xzvf - --strip-components=1 -C ./out
 
+      - name: Move _next to next
+        run: |
+          mv out/_next out/next
+
       - name: Replace all urls with rboard.dev
         run: |
           find out -type f -exec sed -i 's/https:\/\/dertyp7214.de/https:\/\/rboard.dev/g' {} \;
+
+      - name: Replace _next with next
+        run: |
+          find out -type f -exec sed -i 's/_next\//next\//g' {} \;
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
