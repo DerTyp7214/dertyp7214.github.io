@@ -128,8 +128,8 @@ jobs:
           echo "| Key | Value |" >> $GITHUB_STEP_SUMMARY
           echo "| -- | -- |" >> $GITHUB_STEP_SUMMARY
           echo "| Version | ${{ steps.package-version.outputs.current-version}} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Commit | [${{ steps.commit.outputs.short }}](https://github.com/DerTyp7214/Portfoio/commit/${{ steps.commit.outputs.hash }}) |" >> $GITHUB_STEP_SUMMARY
-          echo "| Job | [${{ github.run_id }}](https://github.com/DerTyp7214/Portfoio/actions/runs/${{ github.run_id }}) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Commit | [${{ steps.commit.outputs.short }}](https://github.com/DerTyp7214/dertyp7214.github.io/commit/${{ steps.commit.outputs.hash }}) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | [${{ github.run_id }}](https://github.com/DerTyp7214/dertyp7214.github.io/actions/runs/${{ github.run_id }}) |" >> $GITHUB_STEP_SUMMARY
           echo "| Cached Image Count | ${{ steps.buildNextJS.outputs.count }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Cached Image Size | ${{ steps.buildNextJS.outputs.size }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Cache Duration | ${{ steps.buildNextJS.outputs.duration }} |" >> $GITHUB_STEP_SUMMARY
