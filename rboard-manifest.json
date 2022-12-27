@@ -1,43 +1,43 @@
 {
-    "id": "3789488273",
-    "name": "DerTyp7214.de",
-    "short_name": "DerTyp7214.de",
-    "description": "DerTyp7214.de - Small website with stuff id did",
+    "id": "rboard-3789488273",
+    "name": "RBoard",
+    "short_name": "RBoard",
+    "description": "RBoard - Rboard PWA",
     "icons": [
         {
-            "src": "/icons/favicon-16x16_3789488273.png",
+            "src": "/icons/rboard-16x16_3789488273.png",
             "sizes": "16x16",
             "type": "image/png"
         },
         {
-            "src": "/icons/favicon-32x32_3789488273.png",
+            "src": "/icons/rboard-32x32_3789488273.png",
             "sizes": "32x32",
             "type": "image/png"
         },
         {
-            "src": "/icons/favicon-96x96_3789488273.png",
+            "src": "/icons/rboard-96x96_3789488273.png",
             "sizes": "96x96",
             "type": "image/png"
         },
         {
-            "src": "/icons/favicon-192x192_3789488273.png",
+            "src": "/icons/rboard-192x192_3789488273.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/icons/favicon-384x384_3789488273.png",
+            "src": "/icons/rboard-384x384_3789488273.png",
             "sizes": "384x384",
             "type": "image/png"
         },
         {
-            "src": "/icons/favicon-512x512_3789488273.png",
+            "src": "/icons/rboard-512x512_3789488273.png",
             "sizes": "512x512",
             "type": "image/png"
         }
     ],
     "theme_color": "#66B4FF",
     "background_color": "#353133",
-    "start_url": "/",
+    "start_url": "/rboard",
     "protocol_handlers": [],
     "display": "standalone",
     "orientation": "portrait"
