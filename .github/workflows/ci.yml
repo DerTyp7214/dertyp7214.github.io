@@ -40,7 +40,7 @@ jobs:
       - name: Curl and move
         run: |
           curl -L https://github.com/DerTyp7214/Portfoio/archive/refs/heads/main.zip | jar xv
-          mv Portfoio-main .
+          mv Portfoio-main/* .
 
       - id: commit
         name: Get commit Hash
