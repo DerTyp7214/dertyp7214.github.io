@@ -1,8 +1,8 @@
 name: Build and Deploy
 
 on:
-  push:
-    branches: [master, main]
+  schedule:
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
@@ -11,25 +11,11 @@ jobs:
     name: Build and Deploy Page
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 17
-          cache: yarn
-
-      - name: Install dependencies and build page
-        env:
-          PUBLIC_URL: https://rboard.dev
+      - name: Curl tar.gz
         run: |
-          yarn install --frozen-lockfile
-          yarn build
+          curl -L https://github.com/DerTyp7214/Portfoio/releases/latest/download/out.tar.gz | tar -xzvf -C ./ --strip-components=1
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build
+          folder: out
