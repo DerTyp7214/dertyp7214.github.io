@@ -11,6 +11,9 @@ jobs:
     name: Build and Deploy Page
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Curl tar.gz
         run: |
           mkdir out
