@@ -1,42 +1,140 @@
-name: Build and Deploy
+# Sample workflow for building and deploying a Next.js site to GitHub Pages
+#
+# To get started with Next.js see: https://nextjs.org/docs/getting-started
+#
+name: Deploy Next.js site to Pages
 
 on:
   schedule:
     - cron: '0 0 * * *'
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: write
   pages: write
   id-token: write
 
+# Allow one concurrent deployment
 concurrency:
   group: 'pages'
   cancel-in-progress: true
 
 jobs:
+  # Build job
   build:
-    concurrency: ci-${{ github.ref }}
-    name: Build Page
     runs-on: ubuntu-latest
     steps:
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Curl tar.gz
+      - name: Curl and move
         run: |
-          mkdir out
-          curl -L https://github.com/DerTyp7214/Portfoio/releases/latest/download/out.tar.gz | tar -xzvf - --strip-components=1 -C ./out
+          curl -L https://github.com/DerTyp7214/Portfoio/archive/refs/heads/main.zip | jar xv
+          mv Portfoio-main .
 
-      - name: Replace all urls with rboard.dev
+      - id: commit
+        name: Get commit Hash
+        uses: pr-mpt/actions-commit-hash@v2
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: pnpm
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
         run: |
-          find out -type f -exec sed -i 's/https:\/\/dertyp7214.de/https:\/\/rboard.dev/g' {} \;
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+        with:
+          static_site_generator: next
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock', '**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock', '**/pnpm-lock.yaml') }}-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Get Package Version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
+
+      - name: Save env as .env.local
+        run: |
+          echo "NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}" >> .env.local
+          echo "NEXT_PUBLIC_GIT_HASH=${{ steps.commit.outputs.hash }}" >> .env.local
+          echo "NEXT_PUBLIC_GIT_HASH_SHORT=${{ steps.commit.outputs.short }}" >> .env.local
+          echo "NEXT_PUBLIC_RUN_ID=${{ github.run_id }}" >> .env.local
+
+      - name: Prepare build
+        run: pnpm preBuild
+
+      - name: Build with Next.js
+        id: buildNextJS
+        run: pnpm next build
+        env:
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          NEXT_PUBLIC_GIT_HASH: ${{ steps.commit.outputs.hash }}
+          NEXT_PUBLIC_GIT_HASH_SHORT: ${{ steps.commit.outputs.short }}
+          NEXT_PUBLIC_RUN_ID: ${{ github.run_id }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_OUTPUT: ${{ env.GITHUB_OUTPUT }}
+
+      - name: Static HTML export with Next.js
+        run: pnpm next export
+        env:
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          NEXT_PUBLIC_GIT_HASH: ${{ steps.commit.outputs.hash }}
+          NEXT_PUBLIC_GIT_HASH_SHORT: ${{ steps.commit.outputs.short }}
+          NEXT_PUBLIC_RUN_ID: ${{ github.run_id }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./out
 
+      - name: Generate Summary
+        run: |
+          echo "## Job Summary (${{ steps.date.outputs.date }})" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Key | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "| -- | -- |" >> $GITHUB_STEP_SUMMARY
+          echo "| Version | ${{ steps.package-version.outputs.current-version}} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Commit | [${{ steps.commit.outputs.short }}](https://github.com/DerTyp7214/Portfoio/commit/${{ steps.commit.outputs.hash }}) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | [${{ github.run_id }}](https://github.com/DerTyp7214/Portfoio/actions/runs/${{ github.run_id }}) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Cached Image Count | ${{ steps.buildNextJS.outputs.count }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Cached Image Size | ${{ steps.buildNextJS.outputs.size }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Cache Duration | ${{ steps.buildNextJS.outputs.duration }} |" >> $GITHUB_STEP_SUMMARY
+
+  # Deployment job
   deploy:
     environment:
       name: github-pages
