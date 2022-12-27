@@ -13,7 +13,8 @@ jobs:
     steps:
       - name: Curl tar.gz
         run: |
-          curl -L https://github.com/DerTyp7214/Portfoio/releases/latest/download/out.tar.gz | tar -xzvf - --strip-components=1
+          mkdir out
+          curl -L https://github.com/DerTyp7214/Portfoio/releases/latest/download/out.tar.gz | tar -xzvf - --strip-components=1 -C ./out
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
