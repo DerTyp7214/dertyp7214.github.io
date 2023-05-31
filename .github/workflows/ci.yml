@@ -46,17 +46,15 @@ jobs:
         name: Get commit Hash
         uses: pr-mpt/actions-commit-hash@v2
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
-
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 'lts/*'
+          
+      - name: Install pnpm
+        run: |
+          wget -qO- https://get.pnpm.io/install.sh | sh -
+          pnpm add -g pnpm
 
       - name: Get pnpm store directory
         id: pnpm-cache
