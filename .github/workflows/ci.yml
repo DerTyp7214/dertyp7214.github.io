@@ -53,7 +53,7 @@ jobs:
           
       - name: Install pnpm
         run: |
-          wget -qO- https://get.pnpm.io/install.sh | sh -
+          npm install -g pnpm
           pnpm add -g pnpm
 
       - name: Get pnpm store directory
